@@ -1,0 +1,49 @@
+model cliente {
+  id           Int        @id @default(autoincrement())
+  denominacion String     @unique(map: "Cliente_denominacion_key") @db.VarChar(255)
+  observacion  String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime?
+  deletedAt    DateTime?
+  proyecto     proyecto[]
+
+  @@index([deletedAt, denominacion], map: "Cliente_deletedAt_denominacion_idx")
+}
+
+model issues {
+  id           Int       @id @default(autoincrement())
+  denominacion String    @unique(map: "Issues_denominacion_key") @db.VarChar(255)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime?
+  deletedAt    DateTime?
+  observacion  String    @db.VarChar(255)
+}
+
+model proyecto {
+  id             Int              @id @default(autoincrement())
+  denominacion   String           @db.VarChar(255)
+  observacion    String?
+  clienteId      Int?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime?
+  deletedAt      DateTime?
+  csfs           csf[]
+  cliente        cliente?         @relation(fields: [clienteId], references: [id], onDelete: Cascade, map: "Proyecto_clienteId_fkey")
+  usuariosistema usuariosistema[] @relation("proyectousuario")
+
+  @@unique([denominacion, clienteId], map: "Proyecto_denominacion_clienteId_key")
+  @@index([clienteId], map: "Proyecto_clienteId_fkey")
+  @@index([deletedAt, denominacion], map: "Proyecto_deletedAt_denominacion_idx")
+}
+
+model usuariosistema {
+  id           Int        @id @default(autoincrement())
+  denominacion String     @unique(map: "UsuarioSistema_denominacion_key") @db.VarChar(255)
+  observacion  String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime?
+  deletedAt    DateTime?
+  proyecto     proyecto[] @relation("proyectousuario")
+
+  @@index([deletedAt, denominacion], map: "UsuarioSistema_deletedAt_denominacion_idx")
+}

@@ -1,0 +1,14 @@
+model csf {
+  id           Int       @id @default(autoincrement())
+  denominacion String    @db.VarChar(255)
+  observacion  String?
+  proyectoId   Int
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+  proyecto     proyecto  @relation(fields: [proyectoId], references: [id], onDelete: Cascade)
+
+  @@unique([denominacion, proyectoId])
+  @@index([deletedAt, denominacion])
+  @@index([proyectoId], map: "csf_proyectoId_fkey")
+}
