@@ -14,6 +14,8 @@ async function bootstrap() {
 
   );
 
+  app.enableCors(); // Habilitar CORS antes de escuchar
+
     // Configurar prefijo para endpoints
    app.setGlobalPrefix('api');
 

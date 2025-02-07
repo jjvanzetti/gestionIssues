@@ -9,10 +9,15 @@ import { TipoIssuesModule } from './modules/issues/tipo-issues/tipo-issues.modul
 import { DeudaTecnicaModule } from './modules/issues/deuda-tecnica/deuda-tecnica.module';
 import { UsuarioSistemaModule } from './modules/domain/usuario-sistema/usuario-sistema.module';
 import { SeedModule } from './modules/seed/seed.module';
+import { ConfigModule } from '@nestjs/config';
+
 
 
 @Module({
-  imports: [ClienteModule, ProyectoModule, CsfModule, IssuesModule, TipoIssuesModule, DeudaTecnicaModule, UsuarioSistemaModule, SeedModule],
+  imports: [ClienteModule, ProyectoModule, CsfModule, IssuesModule, TipoIssuesModule, DeudaTecnicaModule, UsuarioSistemaModule, SeedModule, 
+    ConfigModule.forRoot({
+    isGlobal: true, // Hace que las variables del .env estén disponibles en toda la app
+  })],
   controllers: [AppController],
   providers: [AppService
     
