@@ -1,11 +1,12 @@
 model cliente {
   id           Int        @id @default(autoincrement())
   denominacion String     @unique(map: "Cliente_denominacion_key") @db.VarChar(255)
-  observacion  String?
+
   createdAt    DateTime   @default(now())
   updatedAt    DateTime?
   deletedAt    DateTime?
   proyecto     proyecto[]
+  apellido     String     @default("Desconocido")
 
   @@index([deletedAt, denominacion], map: "Cliente_deletedAt_denominacion_idx")
 }
